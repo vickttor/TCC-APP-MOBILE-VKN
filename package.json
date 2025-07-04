@@ -3,17 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android-build": "export JAVA_HOME=`/usr/libexec/java_home -v 1.8` && cd android && ./gradlew bundleRelease",
-    "android-build-apk": "export JAVA_HOME=`/usr/libexec/java_home -v 1.8` && cd android && ./gradlew assembleRelease",
-    "android": "export JAVA_HOME=`/usr/libexec/java_home -v 1.8` && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090 && adb reverse tcp:8000 tcp:8000 && react-native run-android",
+    "android-build": "cd android && ./gradlew bundleRelease",
+    "android-build-apk": "cd android && ./gradlew assembleRelease",
+    "android": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090 && adb reverse tcp:8000 tcp:8000 && NODE_OPTIONS='--openssl-legacy-provider' react-native run-android",
     "ios": "react-native run-ios --device='iPhone de Vinicius'",
     "ios11": "react-native run-ios",
-    "androidclean": "export JAVA_HOME=`/usr/libexec/java_home -v 1.8` && cd android && ./gradlew clean",
+    "androidclean": "cd android && ./gradlew clean",
     "ios6s": "react-native run-ios --simulator='iPhone 6s'",
     "ios6sPlus": "react-native run-ios --simulator='iPhone 6s Plus'",
     "iosSmall": "react-native run-ios --simulator='iPhone 5s'",
     "pod": "cd ios && pod install",
-    "start": "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 yarn start",
+    "start": "NODE_OPTIONS='--openssl-legacy-provider' npx react-native start",
     "test": "jest"
   },
   "dependencies": {

@@ -3,7 +3,7 @@ import {Box, Title, Text, Touchable} from '../../../styles';
 import {FlatList} from 'react-native-gesture-handler';
 import util from '../../../util';
 import theme from '../../../styles/theme.json';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {updateAgendamento} from '../../../store/modules/salao/actions';
 import moment from 'moment/min/moment-with-locales';
 moment.locale('pt-br');
@@ -20,6 +20,7 @@ const DateTimePicker = ({
   const dispatch = useDispatch();
 
   const setAgendamentoData = (value, isTime = false) => {
+    // eslint-disable-next-line no-shadow
     const {horariosDisponiveis} = util.selectAgendamento(
       agenda,
       isTime ? dataSelecionada : value,

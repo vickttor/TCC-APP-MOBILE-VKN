@@ -20,12 +20,12 @@ const Home = () => {
         })
       : servicos;
 
-  console.tron.log('Total Serviços => ' + finalServicos.length);
+  console.log('Total Serviços => ' + finalServicos.length);
 
   useEffect(() => {
     dispatch(getSalao());
     dispatch(allServicos());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -34,6 +34,7 @@ const Home = () => {
         data={finalServicos}
         renderItem={({item}) => <Servico key={item._id} item={item} />}
         keyExtractor={(item) => item._id}
+        // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{paddingBottom: 100}}
       />
       <ModalAgendamento />

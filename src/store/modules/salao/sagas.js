@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import moment from 'moment';
 import {Alert} from 'react-native';
 import {takeLatest, all, call, put, select} from 'redux-saga/effects';
@@ -51,7 +52,7 @@ export function* filterAgenda() {
         ? moment().format('YYYY-MM-DD')
         : Object.keys(agenda[0])[0];
 
-    const {data: res} = yield call(api.post, `/agendamento/dias-disponiveis`, {
+    const {data: res} = yield call(api.post, '/agendamento/dias-disponiveis', {
       ...agendamento,
       data: finalStartDate,
     });
@@ -81,7 +82,7 @@ export function* saveAgendamento() {
     yield put(updateForm('agendamentoLoading', true));
 
     const {agendamento} = yield select((state) => state.salao);
-    const {data: res} = yield call(api.post, `/agendamento`, agendamento);
+    const {data: res} = yield call(api.post, '/agendamento', agendamento);
     if (res.error) {
       alert(res.message);
       return false;

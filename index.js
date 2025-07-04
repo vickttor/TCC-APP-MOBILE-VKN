@@ -1,36 +1,30 @@
 import React from 'react';
-
-import {AppRegistry} from 'react-native';
-import Home from './src/pages/Home';
-
-import {
-  configureFonts,
-  DefaultTheme,
-  Provider as PaperProvider,
-} from 'react-native-paper';
-
+import {AppRegistry, Text, View, StyleSheet} from 'react-native';
 import {name as appName} from './app.json';
-import {fonts} from './src/styles/theme.json';
 
-import {Provider as StoreProvider} from 'react-redux';
-import store from './src/store';
-
-const theme = {
-  ...DefaultTheme,
-  fonts: configureFonts({
-    ios: fonts,
-    android: fonts,
-  }),
-};
-
+// Minimal test app
 const App = () => {
   return (
-    <StoreProvider store={store}>
-      <PaperProvider theme={theme}>
-        <Home />
-      </PaperProvider>
-    </StoreProvider>
+    <View style={styles.container}>
+      <Text style={styles.text}>Hello World!</Text>
+      <Text style={styles.text}>React Native is working! 🎉</Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  text: {
+    fontSize: 18,
+    textAlign: 'center',
+    margin: 10,
+    color: '#333',
+  },
+});
 
 AppRegistry.registerComponent(appName, () => App);

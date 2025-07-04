@@ -7,6 +7,8 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.JavaScriptExecutorFactory;
+import com.facebook.react.jscexecutor.JSCExecutorFactory;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -33,6 +35,16 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+        
+        @Override
+        protected String getJSBundleFile() {
+          return null; // Use default from Metro
+        }
+        
+        @Override
+        protected JavaScriptExecutorFactory getJavaScriptExecutorFactory() {
+          return new JSCExecutorFactory("com.app", "RN");
+        }
       };
 
   @Override
@@ -44,7 +56,8 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    // Flipper disabled due to dependency issues
+    // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
   /**

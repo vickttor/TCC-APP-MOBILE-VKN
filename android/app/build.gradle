@@ -79,6 +79,8 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
+    bundleInDebug: false,
+    bundleInRelease: true
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -134,6 +136,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
     }
     splits {
         abi {
@@ -163,6 +168,13 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libjsc.so'
+        pickFirst '**/libreactnativejni.so'
+        pickFirst '**/libfbjni.so'
+    }
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -187,18 +199,19 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
-      exclude group:'com.facebook.fbjni'
-    }
+    // Flipper disabled due to dependency issues with newer Gradle/Maven Central
+    // debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+    //   exclude group:'com.facebook.fbjni'
+    // }
 
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
+    // debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+    //     exclude group:'com.facebook.flipper'
+    //     exclude group:'com.squareup.okhttp3', module:'okhttp'
+    // }
 
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
-    }
+    // debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+    //     exclude group:'com.facebook.flipper'
+    // }
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -217,3 +230,10 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// Disable stripDebugDebugSymbols task to avoid NDK toolchain issues
+tasks.whenTaskAdded { task ->
+    if (task.name == 'stripDebugDebugSymbols') {
+        task.enabled = false
+    }
+}

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export default {
   diasSemana: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
   toAlpha: (hex, alpha) => {
@@ -49,5 +47,3 @@ export default {
     bucketURL: 'https://salao-na-mao.s3.amazonaws.com',
   },
 };
-
-

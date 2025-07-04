@@ -39,6 +39,7 @@ const EspecialistasModal = ({
     <Modal
       open={form.modalEspecialista}
       modalDidClose={() => dispatch(updateForm('modalEspecialista', false))}
+      // eslint-disable-next-line react-native/no-inline-styles
       modalStyle={{padding: 0, borderRadius: 7, overflow: 'hidden'}}>
       <ScrollView>
         <Box hasPadding direction="column">
